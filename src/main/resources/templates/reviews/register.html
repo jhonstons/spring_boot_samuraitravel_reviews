@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+		<meta charset="UTF-8">
+		<title>レビューを登録</title>
+</head>
+<body>
+		<h1>レビューを登録</h1>
+		<form th:action="@{/reviews/register}" th:object="${reviewRegisterForm}" method="post">
+				<input type="hidden" th:field="*{houseId}"/>
+				<input type="hidden" th:field="*{userId}"/>
+				<label for="userName">ユーザー名:</label>
+				<input type="text" th:field="*{userName}"/><br>
+				<label for="comment">コメント:</label>
+				<textarea th:field="*{comment}"></textarea><br>
+				<label for="score">評価:</label>
+				<input type="number" th:field="*{score}" min="1" max="5"/><br>
+				<button type="submit">登録</button>
+		</form>		
+</body>
+</html>
