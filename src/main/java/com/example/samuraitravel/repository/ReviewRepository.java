@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.Review;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
-	List<Review> findByHouseId(Long houseId);
+public interface ReviewRepository extends JpaRepository<Review, Integer> {
+	List<Review> findByHouse(House house);
 }
