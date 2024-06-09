@@ -11,16 +11,16 @@ import com.example.samuraitravel.repository.HouseRepository;
 
 @Controller
 public class HomeController {
-     private final HouseRepository houseRepository;        
-     
-     public HomeController(HouseRepository houseRepository) {
-         this.houseRepository = houseRepository;            
-     }    
+    private final HouseRepository houseRepository;        
     
-    @GetMapping("/")
-     public String index(Model model) {
-         List<House> newHouses = houseRepository.findTop10ByOrderByCreatedAtDesc();
-         model.addAttribute("newHouses", newHouses);        
+    public HomeController(HouseRepository houseRepository) {
+        this.houseRepository = houseRepository;            
+    }    
+    
+    @GetMapping("/")    
+    public String index(Model model) {
+        List<House> newHouses = houseRepository.findTop10ByOrderByCreatedAtDesc();
+        model.addAttribute("newHouses", newHouses);        
         
         return "index";
     }   
