@@ -55,14 +55,16 @@
      FOREIGN KEY (house_id) REFERENCES houses(id),
      FOREIGN KEY (user_id) REFERENCES users(id)
  );
-      
+
   CREATE TABLE IF NOT EXISTS reviews (
      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-     user_id INT NOT NULL,
      house_id INT NOT NULL,
-     rating DECIMAL (2, 1) CHECK (rating >= 1.0 AND rating <= 5.0), 
-     review_comment TEXT NOT NULL,
-     review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-     update_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,    
+     user_id INT NOT NULL,
+     score INT NOT NULL,
+     content TEXT NOT NULL,
+     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     UNIQUE (house_id, user_id),
+     FOREIGN KEY (house_id) REFERENCES houses(id),
      FOREIGN KEY (user_id) REFERENCES users(id)
  );
