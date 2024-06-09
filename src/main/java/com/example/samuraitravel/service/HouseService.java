@@ -69,8 +69,8 @@ public class HouseService {
         house.setPhoneNumber(houseEditForm.getPhoneNumber());
                     
         houseRepository.save(house);
-        
     }    
+    
     // UUIDを使って生成したファイル名を返す
     public String generateNewFileName(String fileName) {
         String[] fileNames = fileName.split("\\.");                
