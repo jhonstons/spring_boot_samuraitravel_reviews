@@ -1,8 +1,5 @@
 package com.example.samuraitravel.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.example.samuraitravel.entity.House;
@@ -12,44 +9,44 @@ import com.example.samuraitravel.form.ReviewEditForm;
 import com.example.samuraitravel.form.ReviewRegisterForm;
 import com.example.samuraitravel.repository.ReviewRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ReviewService {
-    private final ReviewRepository reviewRepository;
-    
-    public ReviewService(ReviewRepository reviewRepository) {
-    	this.reviewRepository = reviewRepository;
-    }    	
-    	
-    public List<Review> findByHouse(House house) { 
-    	return reviewRepository.findByHouse(house);
-	}
+	private final ReviewRepository reviewRepository;		
 
-	public Review getReviewById(Integer id) {
-		return reviewRepository.findById(id).orElse(null);
+	public ReviewService(ReviewRepository reviewRepository) {
+		this.reviewRepository = reviewRepository;
 	}
-
-	public void updateReview(Integer id, ReviewEditForm form) {
-		Review review = reviewRepository.findById(id).orElseThrow(() -> new RuntimeException("Review not found"));
-		review.setHouse(new House());
-		review.setUser(new User());
-		review.setContent(form.getContent());
-		review.setScore(form.getScore());
-		review.setUpdatedAt(LocalDateTime.now());
+	
+	@Transactional
+	public void save(Review review) {
 		reviewRepository.save(review);
 	}
 
-	public void deleteReview(Integer reviewId) {
-		reviewRepository.deleteById(reviewId);
-	}
-
-	public void saveReview(ReviewRegisterForm form) {
-	    Review review = new Review();
-	    review.setHouse(new House());
-	    review.setUser(new User());
-	    review.setContent(form.getContent());
-	    review.setScore(form.getScore());
-	    review.setCreatedAt(LocalDateTime.now());
-	    review.setUpdatedAt(LocalDateTime.now());
-	    reviewRepository.save(review);
-	}
+	@Transactional
+    public void create(House house, User user, ReviewRegisterForm reviewResisterForm) {
+    	Review review = new Review();
+    
+    	review.setHouse(house); 
+    	review.setUser(user);
+    	review.setScore(reviewResisterForm.getScore());
+    	review.setContent(reviewResisterForm.getContent());
+    	
+    	reviewRepository.save(review);
+    }    	
+    
+    @Transactional
+    public void update(ReviewEditForm reviewEditForm) {
+    	Review review = reviewRepository.getReferenceById(reviewEditForm.getId());
+    	
+        review.setScore(reviewEditForm.getScore());                
+        review.setContent(reviewEditForm.getContent());
+    	
+    	reviewRepository.save(review);
+    }
+    
+    public boolean hasUserAlreadyReviewd(House house,User user) {
+    	return reviewRepository.findByHouseAndUser(house, user)!= null;
+    }
 }
