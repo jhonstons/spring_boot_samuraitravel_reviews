@@ -146,36 +146,12 @@
                                     </div>                                                                                                                                                                                             
                                 </div>                                                                                             
                             </div>
-                            <!-- レビューをインクルード -->
-														<div th:replace="reviews/index :: reviewsFragment"></div>
-														<!-- レビューを追加するフォーム -->
-														<div th:if="${isLoggedIn}">
-																<h2>レビューを追加</h2>
-																<form th:action="@{/reviews/register}" method="post">
-																		<input type="hidden" name="houseId" th:value="${house.id}"/>
-																		<button type="submit">新しいレビューを追加</button>
-																</form>
-																
-														<div th:if="${reviews != null}">     
-																<h2>レビュー一覧</h2>
-																		<div th:if="${reviews.isEmpty()}">
-																				<p>まだレビューがありません。</p>
-																		</div>
-																		<div th:each="review : ${reviews}">
-																			<p th:text="${review.name}">ユーザー名</p>
-																			<p th:text="${review.comment}">コメント</p>
-																			<p th:utext="'評価: ' + '&#9733;'.repeat(${review.score})"></p>
-																				<div th:if="${isLoggedIn}">
-																						<button th:onclick="'deleteReview(' + ${review.id} + ')'">削除</button>
-																						<button th:onclick="'editReview(' + ${review.id} + ')'">編集</button>
-																				</div>
-																		</div>        
-														</div>
-														</div>
-                           
                         </div>
                     </div>
                 </div>
+           <!-- レビュー一覧を表示する部分 -->
+           			<div th:include="templates/reviews/index :: #reviews"></div>
+           			           
             </main>
             
             <!-- フッター -->
