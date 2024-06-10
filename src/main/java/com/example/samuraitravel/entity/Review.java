@@ -29,10 +29,10 @@ public class Review {
 	@JoinColumn(name = "user_Id", nullable = false)
     private User user;
 	
-	@Column(nullable = false)
+	@Column(name = "socre", nullable = false)
 	private int score;
 	
-	@Column(nullable = false)
+	@Column(name = "content", nullable = false)
 	private String content;
 		
 	@Column(name = "created_at", nullable = false)
@@ -41,9 +41,5 @@ public class Review {
 	@Column(name = "updated_at", nullable = false)
 	private LocalDateTime updatedAt;
 
-	public String getName() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
 
 }
