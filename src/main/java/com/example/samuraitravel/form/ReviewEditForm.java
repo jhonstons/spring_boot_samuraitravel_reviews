@@ -1,59 +1,25 @@
 package com.example.samuraitravel.form;
 
-public class ReviewEditForm {
-    private Integer id;
-    private Integer houseId;
-    private Integer userId;
-    private String name;
-    private String content;
-    private int score;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
-    public Integer getId() {
-    	return id;
-    }
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    public void setId(Integer id) {
-    	this.id = id;
-    }
-    
-    public Integer getHouseId() {
-    	return houseId;
-    }
-    
-    public void setHouseId(Integer houseId) {
-    	this.houseId = houseId;
-    }
-    
-    public Integer getUserId() {
-    	return userId;
-    }
-    
-    public void setUserId(Integer userId) {
-    	this.userId = userId;
-    }
+@Data
+@AllArgsConstructor
+public class ReviewEditForm{
+	@NotNull
+	private Integer id;
 
-    public String getName() {
-    	return name;
-    }
-    
-    public void setName(String Name) {
-    	this.name = Name;
-    }
-    
-    public String getContent() {
-    	return content;
-    }
-    
-    public void setContent(String content) {
-    	this.content = content;
-    }
+	@NotNull(message = "評価を選択してください。")
+	@Range(min = 1, max = 5, message = "評価は１〜５のいずれかを選択してください。")
+	private Integer score;
 
-    public int getScore() {
-    	return score;
-    }
-    
-    public void setScore(int score) {
-    	this.score = score;
-    }
-    
+	@NotBlank(message = "コメントを入力してください。")
+	@Length(max = 300, message = "コメントは300文字以内で入力してください。")
+	private String content;
+	
 }

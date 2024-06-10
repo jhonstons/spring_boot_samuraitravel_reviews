@@ -1,43 +1,19 @@
 package com.example.samuraitravel.form;
 
-public class ReviewRegisterForm {
-	private Integer houseId;
-	private Integer userId;
-	private String name;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data 
+public class ReviewRegisterForm{
+	@NotNull(message = "評価を選択してください。")
+	@Range(min = 1, max = 5, message = "評価は１〜５のいずれかを選択してください。")
+	private Integer score;
+	
+	@NotBlank(message = "コメントを入力してください。")
+	@Length(max = 300, message = "コメントは300文字以内で入力してください。")
 	private String content;
-	private int score;	
-
-	public Integer getHouseId() {
-		return houseId;
-	}
-	
-	public void setHouseId(Integer houseId) {
-		this.houseId = houseId;
-	}
-	
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	
-	public String getContent() {
-		return content;
-	}
-	
-	public int getScore() {
-		return score;
-	}
-
 }
