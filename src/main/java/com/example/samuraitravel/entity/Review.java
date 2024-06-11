@@ -18,28 +18,28 @@ import lombok.Data;
 public class Review {
     
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
     private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "house_Id", nullable = false)
+	@JoinColumn(name = "house_Id")
     private House house;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_Id", nullable = false)
+	@JoinColumn(name = "user_Id")
     private User user;
 	
-	@Column(name = "socre", nullable = false)
+	@Column(name = "score")
 	private int score;
 	
-	@Column(name = "content", nullable = false)
+	@Column(name = "content")
 	private String content;
 		
-	@Column(name = "created_at", nullable = false)
+	@Column(name = "created_at", insertable = false, updatable = false)
 	private LocalDateTime createdAt;
 	
-	@Column(name = "updated_at", nullable = false)
+	@Column(name = "updated_at", insertable = false, updatable = false)
 	private LocalDateTime updatedAt;
-
 
 }
