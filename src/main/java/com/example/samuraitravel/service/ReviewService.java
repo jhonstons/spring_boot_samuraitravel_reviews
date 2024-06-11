@@ -20,21 +20,16 @@ public class ReviewService {
 	}
 	
 	@Transactional
-	public void save(Review review) {
-		reviewRepository.save(review);
-	}
-
-	@Transactional
-    public void create(House house, User user, ReviewRegisterForm reviewResisterForm) {
-    	Review review = new Review();
-    
+	public void create(House house, User user, ReviewRegisterForm reviewRegisterForm) {
+		Review review = new Review();
+	
     	review.setHouse(house); 
     	review.setUser(user);
-    	review.setScore(reviewResisterForm.getScore());
-    	review.setContent(reviewResisterForm.getContent());
-    	
+    	review.setScore(reviewRegisterForm.getScore());
+    	review.setContent(reviewRegisterForm.getContent());
+	
     	reviewRepository.save(review);
-    }    	
+	}
     
     @Transactional
     public void update(ReviewEditForm reviewEditForm) {
@@ -46,7 +41,7 @@ public class ReviewService {
     	reviewRepository.save(review);
     }
     
-    public boolean hasUserAlreadyReviewd(House house,User user) {
+    public boolean hasUserAlreadyReviewd(House house, User user) {
     	return reviewRepository.findByHouseAndUser(house, user)!= null;
     }
 }
