@@ -7,10 +7,10 @@
 <body>
     <h1>レビュー</h1>
         <ul>
-						<li th:each="review : ${newReviews}" th:text="${review.content}"></li>
-				</ul>
+		<li th:each="review : ${Reviews}" th:text="${review.content}"></li>
+	</ul>
         <p>Total Reviews: <span th:text="${totalReviewCount}">0</span></p>
         <p th:if="${hasUserAlreadyReviewed}"></p>
-        <a th:href="@{/houses/{id}(id=${house_id})}" th:text="Link to House"></a>
+        <a th:href="@{/houses/{id}(id=${houseId})}" th:text="Link to House"></a>
 </body>
 </html>
