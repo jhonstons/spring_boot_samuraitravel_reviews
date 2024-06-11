@@ -38,10 +38,10 @@ public class HouseController {
         this.reviewRepository = reviewRepository;
     }     
   
+    @GetMapping("/{id}")
     public String show(@PathVariable(name = "id") Integer id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
 		House house = houseRepository.getReferenceById(id);
-		
-	boolean hasUserAlreadyReviewed = false;
+		boolean hasUserAlreadyReviewed = false;
 	
 		if(userDetailsImpl != null) {
 			User user = userDetailsImpl.getUser();
@@ -51,14 +51,17 @@ public class HouseController {
 		List<Review> newReviews = reviewRepository.findTop6ByHouseOrderByCreatedAtDesc(house);
 		long totalReviewCount = reviewRepository.countByHouse(house);
     
+		model.addAttribute("house", house);
 		model.addAttribute("hasUserAlreadyReviewed", hasUserAlreadyReviewed);
 		model.addAttribute("newReviews", newReviews);
 		model.addAttribute("totalReviewCount", totalReviewCount);
+		model.addAttribute("reservationInputForm", new ReservationInputForm());
+		model.addAttribute("isLoggedIn", userDetailsImpl != null);
    
 		return "houses/show";
 		
     }
-    
+ 
     @GetMapping
     public String index(@RequestParam(name = "keyword", required = false) String keyword,
                         @RequestParam(name = "area", required = false) String area,
@@ -103,15 +106,4 @@ public class HouseController {
         
         return "houses/index";
     }
-    
-    @GetMapping("/{id}")
-    public String showDetails(@PathVariable(name = "id") Integer id, Model model) {
-        House house = houseRepository.getReferenceById(id);
-        
-        model.addAttribute("house", house); 
-        model.addAttribute("reservationInputForm", new ReservationInputForm());
-        model.addAttribute("isLoggedIn" /* ログイン状態をチェックするロジック */);
-        
-        return "houses/show";
-    } 
 }
