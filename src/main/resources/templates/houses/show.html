@@ -7,7 +7,8 @@
         
         <!-- Flatpickr -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-          
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
         <title>民宿詳細</title>   
     </head>
     <body>
@@ -140,19 +141,46 @@
                                                     <div class="form-group">
                                                         <button type="submit" class="btn text-white shadow-sm w-100 samuraitravel-btn">予約する</button>
                                                     </div>
-                                                </form>                                                                     
-                                            </div>
-                                        </div>
+                                                </form>
+                                             </div>                                                                     
+                                          </div>
+                                   	   </div>
                                     </div>                                                                                                                                   
-                                </div>                                                                                     
-                            </div>
-                        </div>
-                    </div>
-                </div>
-           <!-- レビュー一覧を表示する部分 -->
-           			<div th:include="templates/reviews/index :: #reviews"></div>
-           			           
-            </main>
+                                 </div>                                                                                     
+                  
+                  
+           								<!-- レビュー一覧を表示する部分 -->
+           									 <div class="row mt-5">
+																<div class="col-12">
+																		<h2>レビュー</h2>
+																				<h3><a th:href="@{/houses/{houseId}/reviews/register(houseId=${house.id})}" class="btn btn-success">レビューを投稿する</a></h3>
+																		<div class="left mb-4">
+																				<div class="row">
+																						<div class="col-md-6 mb-4" th:each="review : ${newReviews}">	
+																								<div class="card h-100">	
+																										<div class="card-body">
+																										<h5 class="card-title" th:text="${review.user.name}">User Name</h5>
+																												<div class="mb-2">
+																												<span th:each="star : ${#numbers.sequence(1, review.score)}">
+																														<i class="fas fa-star"></i>
+																												</span>
+																												</div>
+																												<h6 class="card-subtitle mb-2 text-muted" th:text="${#dates.format(review.createdAt, 'yyyy年MM月dd日')}">Review Date</h6>
+																												<p class="card-text" th:text="${review.content}">Review content goes here.</p>
+																										</div>
+																								</div>
+																						</div>
+																				</div>
+																		</div>
+																				<div class="text-center">
+																				<a th:href="@{/houses/{id}/reviews(id=${house.id})}">すべてのレビューを見る</a>																	
+																				</div>
+																</div>
+														</div>
+						             </div>
+						         </div>
+                </div>  
+       	    </main>
             
             <!-- フッター -->
             <div th:replace="~{fragment :: footer}"></div>
