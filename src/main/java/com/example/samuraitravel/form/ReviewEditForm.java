@@ -22,4 +22,12 @@ public class ReviewEditForm{
 	@Length(max = 300, message = "コメントは300文字以内で入力してください。")
 	private String content;
 	
+	@NotNull
+	private Integer houseId;
+	
+	@NotNull
+	private Integer userId;
+	
+	@NotBlank
+	private String Name;
 }
