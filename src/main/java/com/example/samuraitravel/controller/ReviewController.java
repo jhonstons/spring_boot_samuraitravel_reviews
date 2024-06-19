@@ -77,17 +77,21 @@ public class ReviewController {
 		}
 		
 		reviewService.create(house, user, reviewRegisterForm);
-		redirectAttributes.addFlashAttribute("successMessage", "レビューが登録されました。");
+		redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");
 		
 		return "redirect:/houses/{houseId}";
 	}
 	
 	@GetMapping("/{reviewId}/edit")
-	public String edit(@PathVariable(name = "houseId")Integer houseId, @PathVariable(name = "reviewId")Integer reviewId, Model model){
+	public String edit(
+			@PathVariable(name = "houseId")Integer houseId, 
+			@PathVariable(name = "reviewId")Integer reviewId, 
+			Model model
+	){
 		House house = houseRepository.getReferenceById(houseId);
 		Review review = reviewRepository.getReferenceById(reviewId);
 		
-		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getScore(), review.getContent(), houseId, review.getUser().getId(), review.getUser().getName());
+		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getScore(), review.getContent());
 		
 		model.addAttribute("house", house);
 		model.addAttribute("review", review);
@@ -97,7 +101,8 @@ public class ReviewController {
 	}
 
 	@PostMapping("/{reviewId}/update")
-	public String update(@PathVariable(name = "houseId")Integer houseId,
+	public String update(
+		@PathVariable(name = "houseId")Integer houseId,
 		@PathVariable(name = "reviewId")Integer reviewId,
 		@ModelAttribute @Validated ReviewEditForm reviewEditForm,
 		BindingResult bindingResult,
@@ -120,7 +125,10 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/{reviewId}/delete")
-	public String delete(@PathVariable(name = "reviewId")Integer reviewId, RedirectAttributes redirectAttributes) {
+	public String delete(
+			@PathVariable(name = "reviewId") Integer reviewId, 
+			RedirectAttributes redirectAttributes
+	) {
 		reviewRepository.deleteById(reviewId);
 		
 		redirectAttributes.addFlashAttribute("successMessage", "レビューを削除しました。");
