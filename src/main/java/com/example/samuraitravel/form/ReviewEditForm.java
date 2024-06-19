@@ -7,8 +7,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class ReviewEditForm{
 	@NotNull
@@ -29,5 +31,11 @@ public class ReviewEditForm{
 	private Integer userId;
 	
 	@NotBlank
-	private String Name;
+	private String name;
+	
+	public ReviewEditForm(Integer id, int score, String content) {
+		this.id = id;
+		this.score = score;
+		this.content = content;
+	}
 }
