@@ -90,8 +90,15 @@ public class ReviewController {
 	){
 		House house = houseRepository.getReferenceById(houseId);
 		Review review = reviewRepository.getReferenceById(reviewId);
+		User user = review.getUser();
 		
-		ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getScore(), review.getContent());
+		ReviewEditForm reviewEditForm = new ReviewEditForm(
+				review.getId(), 
+				house.getId(),
+				user.getId(),
+				user.getName(),
+				review.getScore(), 
+				review.getContent());
 		
 		model.addAttribute("house", house);
 		model.addAttribute("review", review);
@@ -104,24 +111,29 @@ public class ReviewController {
 	public String update(
 		@PathVariable(name = "houseId")Integer houseId,
 		@PathVariable(name = "reviewId")Integer reviewId,
-		@ModelAttribute @Validated ReviewEditForm reviewEditForm,
+		@ModelAttribute("reviewEditForm") @Validated ReviewEditForm reviewEditForm,
 		BindingResult bindingResult,
 		RedirectAttributes redirectAttributes,
 		Model model)
 	{
+	System.out.println("Update method called");
+	
 	House house = houseRepository.getReferenceById(houseId);
 	Review review = reviewRepository.getReferenceById(reviewId);
 		
 	    if (bindingResult.hasErrors()) {
+	    System.out.println("Binding result has errors");
+	    bindingResult.getAllErrors().forEach(error -> System.out.println(error.toString()));
 	        model.addAttribute("house", house);
 	        model.addAttribute("review", review);
 	        return "reviews/edit";
 	    }
 	
+	    System.out.println("No binding errors, updating review");
 	    reviewService.update(reviewEditForm);
 	    redirectAttributes.addFlashAttribute("successMessage", "レビューを編集しました。");
 	
-	    return "redirect:/houses/{houseId}";
+	    return "redirect:/houses/" + houseId;
 	}
 	
 	@PostMapping("/{reviewId}/delete")
