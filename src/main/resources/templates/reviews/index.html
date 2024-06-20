@@ -3,14 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>レビュー一覧</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-	<div id="reviews">
-  	<h1>レビュー</h1>
-      	<ul>
-		<li th:each="review : ${newReviews}" th:text="${review.content}"></li>
-	</ul>
-		<p>Total Reviews: <span th:text="${totalReviewCount}">0</span></p>
-	</div>      
+		<!-- ヘッダー -->
+		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm samuraitravel-navbar">
+	     <div class="container samuraitravel-container">
+	         <a class="navbar-brand" th:href="@{/}">                        
+	             <img class="samuraitravel-logo me-1" th:src="@{/images/logo.png}" alt="SAMURAI Travel">                        
+	         </a>                                                                    
+	     </div>
+		</nav>
+		
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>
+                <li class="breadcrumb-item"><a th:href="@{'/houses/' + ${house.id}}">民宿詳細</a></li>
+                <li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div id="reviews" class="container">
+        <h1 class="mb-4 text-center" th:text="${house.name + 'のレビュー一覧'}">レビュー</h1>
+        <div class="review-container row">
+            <div th:each="review : ${reviewPage.content}" class="review-card col-md-6 mb-4">
+								<div class="card">
+										<div class="card-body">
+										<h5 class="card-title" th:text="${review.user.name}">ユーザー名</h5>
+    								<p class="card-text">
+                    		<span class="samuraitravel-star" th:each="star : ${#numbers.sequence(1, 5)}" th:text="${star <= review.score} ? '&#9733;' : '&#9734;'"></span>
+                		</p>
+                		<p class="card-text" th:text="${#dates.format(review.createdAt, 'yyyy年MM月dd日')}"></p>
+                		<p class="card-text" th:utext="${#strings.replace(review.content, '\n', '<br/>')}">コメント内容</p>
+										</div>
+								</div>
+            </div>
+        </div>
+        <ul class="pagenation justify-content-center">
+            <li class="page-item" th:if="${reviewPage.hasPrevious()}">
+                <a class="page-link" th:href="@{|/houses/${house.id}/reviews?page=${reviewPage.number - 1}&size=${reviewPage.size}|}">前</a>
+            </li>
+            <li class="page-item" th:each="pageNum : ${#numbers.sequence(1, reviewPage.totalPages)}">
+          			<a class="page-link" th:href="@{|/houses/${house.id}/reviews?page=${pageNum - 1}&size=${reviewPage.size}|}"
+          					th:text="${pageNum}" th:classappend="${pageNum == reviewPage.number + 1}?'active'"></a>       
+            </li>
+            <li class="page-item" th:if="${reviewPage.hasNext()}">
+                <a class="page-link" th:href="@{|/houses/${house.id}/reviews?page=${reviewPage.number + 1}&size=${reviewPage.size}|}">次</a>
+            </li>
+        </ul>
+    </div>
+        <!-- フッター -->
+     <footer>
+         <div class="d-flex justify-content-center align-items-center h-100">
+             <p class="text-center text-muted small mb-0">&copy; SAMURAI Travel All rights reserved.</p>      
+         </div>                 
+     </footer>
+     
 </body>
 </html>
