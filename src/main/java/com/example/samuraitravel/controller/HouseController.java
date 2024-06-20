@@ -57,9 +57,8 @@ public class HouseController {
 		model.addAttribute("totalReviewCount", totalReviewCount);
 		model.addAttribute("reservationInputForm", new ReservationInputForm());
 		model.addAttribute("isLoggedIn", userDetailsImpl != null);
-   
-		return "houses/show";
 		
+		return "houses/show";
     }
  
     @GetMapping
@@ -106,4 +105,5 @@ public class HouseController {
         
         return "houses/index";
     }
+    
 }
