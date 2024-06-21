@@ -17,7 +17,7 @@ public class ReviewEditForm{
 	private Integer id;
 
 	@NotNull(message = "評価を選択してください。")
-	@Range(min = 1, max = 5, message = "評価は１〜５のいずれかを選択してください。")
+	@Range(min = 1, max = 5, message = "評価は1〜5のいずれかを選択してください。")
 	private Integer score;
 
 	@NotBlank(message = "コメントを入力してください。")
@@ -33,8 +33,11 @@ public class ReviewEditForm{
 	@NotBlank
 	private String name;
 	
-	public ReviewEditForm(Integer id, int score, String content) {
+	public ReviewEditForm(Integer id, Integer houseId, Integer userId, String name, Integer score, String content) {
 		this.id = id;
+		this.houseId = houseId;
+		this.userId = userId;
+		this.name = name;
 		this.score = score;
 		this.content = content;
 	}
