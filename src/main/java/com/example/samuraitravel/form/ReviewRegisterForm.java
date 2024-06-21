@@ -16,4 +16,12 @@ public class ReviewRegisterForm{
 	@NotBlank(message = "コメントを入力してください。")
 	@Length(max = 300, message = "コメントは300文字以内で入力してください。")
 	private String content;
+	
+	private Long id;
+	
+	private Long houseId;
+	
+	private Long userId;
+	
+	private String name;
 }
