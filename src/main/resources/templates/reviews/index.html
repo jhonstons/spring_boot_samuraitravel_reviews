@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+	  <div th:replace="~{fragment :: meta}"></div>
+    <div th:replace="~{fragment :: styles}"></div>
+    
     <meta charset="UTF-8">
     <title>レビュー一覧</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -8,14 +11,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+	<div class="samuraitravel-wrapper">
 		<!-- ヘッダー -->
-		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm samuraitravel-navbar">
-	     <div class="container samuraitravel-container">
-	         <a class="navbar-brand" th:href="@{/}">                        
-	             <img class="samuraitravel-logo me-1" th:src="@{/images/logo.png}" alt="SAMURAI Travel">                        
-	         </a>                                                                    
-	     </div>
-		</nav>
+		<div th:replace="~{fragment :: header}"></div>
 		
     <div class="container">
         <nav aria-label="breadcrumb">
@@ -57,12 +55,8 @@
             </li>
         </ul>
     </div>
-        <!-- フッター -->
-     <footer>
-         <div class="d-flex justify-content-center align-items-center h-100">
-             <p class="text-center text-muted small mb-0">&copy; SAMURAI Travel All rights reserved.</p>      
-         </div>                 
-     </footer>
-     
+   	<!-- フッター -->    
+  	<div th:replace="~{fragment :: footer}"></div>
+	</div>
 </body>
 </html>
